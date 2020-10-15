@@ -1,3 +1,4 @@
+
 using System;
 using System.Threading;
 
@@ -5,35 +6,36 @@ namespace fabricantevendedor
 {
     public class Fabricante
     {
-        private Almacen _a;
-        private Thread _t;
-        private Random _rnd = new Random();
-        public Fabricante(Almacen a)
+        private Almacen almacen;
+        private Thread thread;
+        private uint periodicidad;
+        private uint cantidad;
+
+        public Fabricante(Almacen _almacen, uint _periodicidad, uint _cantidad)
         {
-            this._a = a;
+            this.almacen = _almacen;
+            this.periodicidad = _periodicidad;
+            this.cantidad = _cantidad;
         }
 
         public void Fabrica()
         {
-            this._t = new Thread(() => this._Accion());
-            this._t.Start();
+            thread = new Thread(() => _Accion());
+            thread.Start();
         }
 
         public void Termina()
         {
-            _t.Join();
+            thread.Join();
         }
 
         private void _Accion()
         {
-            int ms;
-            for (int i = 0; i < 10; i++)
+            for(uint i = 0 ; i < cantidad ; i++)
             {
-                ms = _rnd.Next(1000, 2000);
-                Thread.Sleep(ms);
-                _a.Guardar();
+                Thread.Sleep(periodicidad);
+                almacen.Guardar();
             }
         }
     }
-
 }
