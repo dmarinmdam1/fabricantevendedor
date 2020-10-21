@@ -1,5 +1,4 @@
 
-using System;
 using System.Threading;
 
 namespace fabricantevendedor
@@ -33,7 +32,7 @@ namespace fabricantevendedor
         {
             for(uint i = 0 ; i < cantidad ; i++)
             {
-                Thread.Sleep(periodicidad);
+                Thread.Sleep((int)periodicidad);
                 almacen.Guardar();
             }
         }
